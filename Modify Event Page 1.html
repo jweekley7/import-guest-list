@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <p style="text-align:center;">Enter or select the next occurring date of the event in mm/dd/yyyy format.</p><br>
+    <p style="text-align:center;">Example: 04/21/2021</p>
+
+  <form style="text-align:center;" id="myform">
+    <div class="block form-group">
+      <label for="event_date">Event Date:</label><br>
+      <input type='date' name='event_date' id="event_date" required="required"/>
+    </div><br>
+    
+    <div class="block">
+      <button type="submit" class="action">Next</button>
+      <button type="reset" class="action">Back</button>
+    </div>
+  </form>
+    <script>
+      document.querySelector("#myform").addEventListener("submit", 
+        function(e) {
+          e.preventDefault();
+          google.script.run.eventDate(this);
+          google.script.run.pleaseWait();
+        }
+      );
+
+      document.querySelector("#myform").addEventListener("reset", 
+        function(e) {
+          e.preventDefault();
+          google.script.run.toPage3();
+        }
+      );
+    </script>
+  </body>
+</html>
