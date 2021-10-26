@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+
+.flex-parent {
+  display: flex;
+}
+
+.jc-center {
+  justify-content: center;
+}
+
+button.margin-right {
+  margin-right: 20px;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+</style>
+  </head>
+  <body>
+
+    <p style="text-align:center;">Do you need to create a new calendar event or add guests to an existing event?</p>
+    <p style="text-align:center;">Select your option then click next.</p>
+
+<form style="text-align:center;" id="myform">
+    <div class="block form-group">
+    <label class="underline" for="event_type">Select One</label><br>
+    <input type="radio" id="new_event" name="event_type" value="New">
+    <label for="new_event">New Event</label><br>
+    <input type="radio" id="existing_event" name="event_type" value="Existing">
+    <label for="existing_event">Existing Event</label>
+    </div><br>
+    
+    
+    <div class="block">
+    <button type="submit" class="action">Next</button>
+    <button type="reset" class="action">Back</button>
+    </div>
+    </form>
+    <script>
+    document.querySelector("#myform").addEventListener("submit", 
+      function(e) {
+        e.preventDefault();
+        google.script.run.getEventType(this);
+      }
+    );
+
+    document.querySelector("#myform").addEventListener("reset", 
+      function(e) {
+        e.preventDefault();
+        google.script.run.toPage2();
+      }
+    );
+    </script>
+
+  </body>
+</html>
