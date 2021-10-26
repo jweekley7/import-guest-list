@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+
+      .flex-parent {
+        display: flex;
+      }
+
+      .jc-center {
+        justify-content: center;
+      }
+
+      button.margin-right {
+        margin-right: 20px;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <p style="text-align:center;">Now select the name of the spreadsheet. <br />Then enter the range of the cells with the email addresses you want  to add to the event guest list. <br />Separate each range with a comma. <br />Example: A1:A20, B10:B20</p>
+    <p style="text-align:center;">Click next when finished.</p>
+
+<form style="text-align:center;" id="myform">
+    <div class="block form-group">
+      <label for="sheet_name">Sheet Name:</label><br>
+      <select name ="sheet_name" id="sheet_name"required>
+        <option value="" disabled selected>Select one</option>
+      </select>
+    </div><br>
+    <div class="block form-group">
+      <label for="email_range">Email Address Range:</label><br>
+      <input type='text' name='email_range' id="email_range" required="required"/>
+    </div><br>
+    
+    <div class="block">
+      <button type="submit" class="action">Next</button>
+      <button type="reset" class="action">Back</button>
+    </div>
+  </form>
+    <script>
+      document.querySelector("#myform").addEventListener("submit", 
+        function(e) {
+          e.preventDefault();
+          google.script.run.addEmailRange(this);
+        }
+      );
+
+      document.querySelector("#myform").addEventListener("reset", 
+        function(e) {
+          e.preventDefault();
+          google.script.run.showSidebar();
+        }
+      );
+
+      (function () {
+        google.script.run.withSuccessHandler(
+          function (selectList) {
+            var select = document.getElementById("sheet_name");
+            for( var i=0; i<selectList.length; i++ ) {
+              var option = document.createElement("option");
+              option.text = selectList[i][0];
+              select.add(option);
+            }
+          }
+        ).sheetNameDropDown();
+      }());
+    </script>
+  </body>
+</html>
