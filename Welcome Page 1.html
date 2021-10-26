@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <h1 style="text-align:center;">Welcome!</h1>
+
+    <p style="text-align:center;">To get started, tell me which calendar you want ot work with then click next.</p>
+
+  <form style="text-align:center;" id="myform">
+    <div class="block form-group">
+      <label for="calendar_name">Calendar Name:</label><br>
+      <select name ="calendar_name" id="calendar_name"required>
+        <option value="" disabled selected>Select one</option>
+      </select>
+    </div><br>
+    
+    <div class="block">
+      <button type="submit" class="action">Next</button>
+    </div>
+  </form>
+    <script>
+      document.querySelector("#myform").addEventListener("submit", 
+        function(e) {
+          e.preventDefault();
+          google.script.run.calendarName(this);
+          google.script.run.toPage2();
+        }
+      );
+
+      (function () {
+        google.script.run.withSuccessHandler(
+          function (selectList) {
+            var select = document.getElementById("calendar_name");
+            for( var i=0; i<selectList.length; i++ ) {
+              var option = document.createElement("option");
+              option.text = selectList[i][0];
+              select.add(option);
+            }
+          }
+        ).calendarNameDropDown();
+      }());
+    </script>
+  </body>
+</html>
